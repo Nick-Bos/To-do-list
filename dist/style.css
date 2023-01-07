@@ -1,0 +1,39 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    
+}
+/*page lyaout*/
+body {
+    display: grid;
+    grid-template-columns: 20% 80%;
+}
+
+
+.side {
+    margin: 0;
+    background-color: aquamarine;
+    grid-row: 2;
+    height: 100vh;
+}
+
+.main {
+    background-color: greenyellow;
+    grid-row: 2;
+    height: 100vh;
+}
+/*page lyaout*/
+
+h2 {
+    margin-left: 20px;
+}
+
+button {
+    display: block;
+    margin-bottom: 10px;
+    margin-left: 20px;
+}
+
+#taskAddContainer {
+    display: block;
+}
