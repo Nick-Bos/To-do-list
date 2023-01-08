@@ -39,24 +39,31 @@ const newTask = () => {
 
     //runs taskmaker constructor
     taskAdd.addEventListener("click", () => {
-      tasksArr.push(
-        new taskMaker(titleInput.value, descInput.value, dateInput.value)
+      const newArr = new taskMaker(
+        titleInput.value,
+        descInput.value,
+        dateInput.value
       );
-      console.log(tasksArr[0]);
+      tasksArr.push(newArr);
+      console.log(tasksArr);
       titleInput.value = "";
       descInput.value = "";
       dateInput.value = "";
     });
 
-    //cancel closes the taskAddContainer and clears input values
+    //cancel closes the taskAddContainer
     taskCancel.addEventListener("click", () => {
-      taskAddContainer.style.display = "none";
+      side.removeChild(taskAddContainer);
     });
   }
+
   //opens taskAddContainer
   const taskBtn = document.getElementById("taskBtn");
   taskBtn.addEventListener("click", () => {
-    taskInputAppend();
+    const target = document.getElementById("taskAddContainer");
+    if (document.contains(target)) {
+      return;
+    } else taskInputAppend();
   });
 };
 
