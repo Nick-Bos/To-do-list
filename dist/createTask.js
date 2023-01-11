@@ -1,4 +1,5 @@
 import { taskMaker } from "./taskConstructor";
+import { displayTasks } from "./displayTasks";
 
 const tasksArr = [];
 
@@ -10,16 +11,12 @@ const newTask = () => {
     const titleInput = document.createElement("input");
     const descLabel = document.createElement("p");
     const descInput = document.createElement("textarea");
-    const dateLabel = document.createElement("p");
-    const dateInput = document.createElement("input");
     const taskAdd = document.createElement("button");
     const taskCancel = document.createElement("button");
 
     side.appendChild(taskAddContainer);
     taskAddContainer.appendChild(titleLabel);
     taskAddContainer.appendChild(titleInput);
-    taskAddContainer.appendChild(dateLabel);
-    taskAddContainer.appendChild(dateInput);
     taskAddContainer.appendChild(descLabel);
     taskAddContainer.appendChild(descInput);
     taskAddContainer.appendChild(taskAdd);
@@ -31,24 +28,18 @@ const newTask = () => {
     descInput.id = "descInput";
     descInput.rows = "5";
     descInput.cols = "22";
-    dateLabel.innerHTML = "Date";
-    dateInput.type = "date";
     taskAdd.innerHTML = "Add";
     taskAdd.id = "taskAdd";
     taskCancel.innerHTML = "Cancel";
 
     //runs taskmaker constructor
     taskAdd.addEventListener("click", () => {
-      const newArr = new taskMaker(
-        titleInput.value,
-        descInput.value,
-        dateInput.value
-      );
+      const newArr = new taskMaker(titleInput.value, descInput.value);
       tasksArr.push(newArr);
-      console.log(tasksArr);
+      //vv display task array code here vv
+      displayTasks(tasksArr);
       titleInput.value = "";
       descInput.value = "";
-      dateInput.value = "";
     });
 
     //cancel closes the taskAddContainer
