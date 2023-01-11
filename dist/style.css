@@ -12,15 +12,33 @@ body {
 
 .side {
     margin: 0;
-    background-color: aquamarine;
+    background-color: rgb(106, 143, 131);
     grid-row: 2;
     height: 100vh;
 }
 
 .main {
-    background-color: greenyellow;
+    background-color: rgb(143, 163, 113);
     grid-row: 2;
     height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+
+#tasksContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.tasks {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.projects {
+    grid-column: 3;
+    grid-row: 1;
 }
 /*page lyaout*/
 
@@ -36,4 +54,28 @@ button {
 
 #taskAddContainer {
     display: block;
+    
+}
+
+input {
+    width: 200px;
+}
+
+li {
+    margin-left: 20px;
+    list-style-type: circle;
+    font-size: 18px;
+}
+
+a {
+   text-decoration: none;
+   color: inherit;
+}
+
+
+
+#dates {
+    grid-column: 3;
+    margin-top: 0;
+    font-size: 15px;
 }
