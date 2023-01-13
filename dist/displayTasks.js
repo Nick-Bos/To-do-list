@@ -10,6 +10,7 @@ const displayTasks = (a) => {
 
   //taskfocus window
   const taskFocus = document.createElement("div");
+  taskFocus.classList.add("tfDiv");
   const tfTitle = document.createElement("h3");
   const tfDescLabel = document.createElement("p");
   const tfDescBox = document.createElement("textarea");
@@ -28,7 +29,6 @@ const displayTasks = (a) => {
   function displayArr(arg) {
     for (let i = 0; i < arg.length; i++) {
       let newTitle = arg[i].title;
-      let newDate = arg[i].date;
       anc.id = [i];
       anc.innerHTML = newTitle;
     }
@@ -37,11 +37,14 @@ const displayTasks = (a) => {
   anc.addEventListener("click", (e) => {
     for (let i = 0; i < myArray.length; i++) {
       if (anc.id == [i]) {
+        tasks.removeChild(tasksContainer);
         tasks.appendChild(taskFocus);
         taskFocus.appendChild(tfTitle);
         tfTitle.innerHTML = myArray[i].title;
         taskFocus.appendChild(tfDescLabel);
         taskFocus.appendChild(tfDescBox);
+        tfDescBox.rows = "5";
+        tfDescBox.cols = "22";
         taskFocus.appendChild(tfDate);
         taskFocus.appendChild(tfClose);
         taskFocus.appendChild(tfDelete);
@@ -62,13 +65,11 @@ const displayTasks = (a) => {
         //closes the taskFocus window
         tfClose.addEventListener("click", () => {
           tasks.removeChild(taskFocus);
+          tasks.appendChild(tasksContainer);
         });
       }
-
-      console.log(myArray);
     }
   });
-  console.log(myArray);
 };
 
 export { displayTasks };
