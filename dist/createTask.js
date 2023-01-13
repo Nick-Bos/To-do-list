@@ -34,17 +34,26 @@ const newTask = () => {
 
     //runs taskmaker constructor
     taskAdd.addEventListener("click", () => {
-      const newArr = new taskMaker(titleInput.value, descInput.value);
-      tasksArr.push(newArr);
-      //vv display task array code here vv
-      displayTasks(tasksArr);
-      titleInput.value = "";
-      descInput.value = "";
+      if (titleInput.value === "") {
+        alert("Please enter a task title");
+      } else {
+        const newArr = new taskMaker(titleInput.value, descInput.value);
+        tasksArr.push(newArr);
+        //vv display task array code here vv
+        displayTasks(tasksArr);
+        titleInput.value = "";
+        descInput.value = "";
+      }
     });
 
     //cancel closes the taskAddContainer
     taskCancel.addEventListener("click", () => {
       side.removeChild(taskAddContainer);
+      taskBtn.classList.remove("add-task-toggle");
+      taskBtn.classList.add("button");
+      const projBtn = document.getElementById("projBtn");
+      projBtn.classList.remove("add-task-toggle");
+      projBtn.classList.add("projBtn");
     });
   }
 
@@ -55,6 +64,11 @@ const newTask = () => {
     if (document.contains(target)) {
       return;
     } else taskInputAppend();
+    taskBtn.classList.remove();
+    taskBtn.classList.add("add-task-toggle");
+    const projBtn = document.getElementById("projBtn");
+    projBtn.classList.remove("projBtn");
+    projBtn.classList.add("add-task-toggle");
   });
 };
 
