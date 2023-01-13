@@ -1,14 +1,12 @@
 html, body {
     margin: 0;
-    padding: 0;
-    
+    padding: 0; 
 }
 /*page lyaout*/
 body {
     display: grid;
     grid-template-columns: 20% 80%;
 }
-
 
 .side {
     margin: 0;
@@ -23,22 +21,23 @@ body {
     height: 100vh;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: 50px 1fr 1fr;
 }
 
 #tasksContainer {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    
 }
 
 .tasks {
     grid-column: 1;
-    grid-row: 1;
+    grid-row: 2;
 }
 
 .projects {
     grid-column: 3;
-    grid-row: 1;
+    grid-row: 2;
 }
 /*page lyaout*/
 
@@ -54,7 +53,15 @@ button {
 
 #taskAddContainer {
     display: block;
-    
+    margin-left: 20px;    
+}
+
+.tfDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin-left: 20px;
 }
 
 input {
@@ -70,12 +77,23 @@ li {
 a {
    text-decoration: none;
    color: inherit;
+   cursor: pointer;
+   font-size: 18px;
 }
 
-
-
-#dates {
-    grid-column: 3;
-    margin-top: 0;
-    font-size: 15px;
+a:hover {
+    font-size: 20px;
+    text-decoration: underline;
 }
+
+.dateInput {
+    width: 176px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/*add task toggle*/
+.add-task-toggle {
+    display: none;
+}
+/*add task toggle*/
