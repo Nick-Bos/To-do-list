@@ -35,7 +35,7 @@ const newTask = () => {
     //runs taskmaker constructor
     taskAdd.addEventListener("click", () => {
       if (titleInput.value === "") {
-        alert("Please enter a task title");
+        alert("Please enter a task Title");
       } else {
         const newArr = new taskMaker(titleInput.value, descInput.value);
         tasksArr.push(newArr);
