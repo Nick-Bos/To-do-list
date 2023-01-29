@@ -1,13 +1,8 @@
 const displayTasks = (a) => {
   //task display items
   const myArray = a;
-  const tasks = document.querySelector(".tasks");
   const tasksContainer = document.createElement("div");
   tasksContainer.id = "tasksContainer";
-  const list = document.createElement("li");
-  list.id = "listItems";
-  const anc = document.createElement("a");
-
   //taskfocus window
   const taskFocus = document.createElement("div");
   taskFocus.classList.add("tfDiv");
@@ -19,25 +14,37 @@ const displayTasks = (a) => {
   const tfDelete = document.createElement("button");
   const tfClose = document.createElement("button");
 
-  //append to Dom
-  tasks.appendChild(tasksContainer);
-  tasksContainer.appendChild(list);
-  list.appendChild(anc);
+  //first call of function to display tasks
+  displayArr(myArray, tasksContainer);
 
-  displayArr(myArray);
+  //display array function
+  function displayArr(array, node) {
+    // selector
+    const tasks = document.getElementById("tasks");
 
-  function displayArr(arg) {
-    for (let i = 0; i < arg.length; i++) {
-      let newTitle = arg[i].title;
-      anc.id = [i];
-      anc.innerHTML = newTitle;
+    //checks array
+    console.log(array);
+
+    // Create tasks container if it doesn't exist
+    let tasksContainer = document.getElementById("tasksContainer");
+    if (!tasksContainer) {
+      tasksContainer = document.createElement("ul");
+      tasksContainer.id = "tasksContainer";
     }
-  }
 
-  anc.addEventListener("click", (e) => {
-    for (let i = 0; i < myArray.length; i++) {
-      if (anc.id == [i]) {
-        tasks.removeChild(tasksContainer);
+    // Clear the list of tasks before updating
+    tasksContainer.innerHTML = "";
+
+    //for loop
+    for (let i = 0; i < array.length; i++) {
+      const list = document.createElement("li");
+      list.id = "listItems";
+      const anc = document.createElement("a");
+      anc.innerHTML = array[i].title;
+      list.appendChild(anc);
+      tasksContainer.appendChild(list);
+
+      anc.addEventListener("click", () => {
         tasks.appendChild(taskFocus);
         taskFocus.appendChild(tfTitle);
         tfTitle.innerHTML = myArray[i].title;
@@ -48,28 +55,46 @@ const displayTasks = (a) => {
         taskFocus.appendChild(tfDate);
         taskFocus.appendChild(tfClose);
         taskFocus.appendChild(tfDelete);
+        tfDelete.id = [i + 1];
+        console.log(tfDelete.id);
 
         tfDescLabel.innerHTML = "Description";
         tfDescBox.innerHTML = String(myArray[i].description);
 
-        tfClose.innerHTML = "Close";
+        tfClose.innerHTML = "Save";
         tfDelete.innerHTML = "Delete";
 
-        //deletes the task
-        tfDelete.addEventListener("click", () => {
-          tasks.removeChild(taskFocus);
-          tasks.removeChild(tasksContainer);
-          myArray.splice(i, 1, 0);
-        });
-
-        //closes the taskFocus window
+        //closes and saves the taskFocus window values
         tfClose.addEventListener("click", () => {
           tasks.removeChild(taskFocus);
           tasks.appendChild(tasksContainer);
+          myArray[i].description = tfDescBox.value;
+          myArray[i].date = tfDate.value;
         });
+      });
+
+      // Append the updated tasks container to the tasks element
+      tasks.appendChild(tasksContainer);
+    }
+  }
+  //deletes the task
+  tfDelete.addEventListener("click", (e) => {
+    removeItem(myArray, e.target.id);
+    tasks.removeChild(taskFocus);
+  });
+
+  function removeItem(array, item) {
+    for (let i = 0; i < array.length; i++) {
+      if (item - 1 == i) {
+        array.splice(i, 1);
       }
     }
-  });
+    displayArr(myArray, tasksContainer);
+    console.log(myArray);
+  }
 };
 
 export { displayTasks };
+
+/*tasks.removeChild(taskFocus);
+    tasks.removeChild(tasksContainer); */

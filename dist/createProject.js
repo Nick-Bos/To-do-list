@@ -50,6 +50,7 @@ const createProject = () => {
       const projects = document.querySelector(".projects");
       const projectContainer = document.createElement("div");
       projectContainer.classList.add("projectsContainer");
+      const projectTasks = document.createElement("div");
       const projectUl = document.createElement("ul");
       const anc = document.createElement("a");
       const projNameArr = new projectMaker(projInput.value);
@@ -72,7 +73,8 @@ const createProject = () => {
       anc.addEventListener("click", () => {
         for (let i = 0; i < projArr.length; i++) {
           if (anc.id == [i]) {
-            const test = document.createElement("div");
+            const ancContainer = document.createElement("div");
+            ancContainer.id = "ancContainer";
             const newtask = document.createElement("li");
             const subAnc = document.createElement("a");
             const titleLabel = document.createElement("p");
@@ -82,13 +84,13 @@ const createProject = () => {
             const taskAdd = document.createElement("button");
             const taskCancel = document.createElement("button");
 
-            projectContainer.appendChild(test);
-            test.appendChild(titleLabel);
-            test.appendChild(titleInput);
-            test.appendChild(descLabel);
-            test.appendChild(descInput);
-            test.appendChild(taskAdd);
-            test.appendChild(taskCancel);
+            projectContainer.appendChild(ancContainer);
+            ancContainer.appendChild(titleLabel);
+            ancContainer.appendChild(titleInput);
+            ancContainer.appendChild(descLabel);
+            ancContainer.appendChild(descInput);
+            ancContainer.appendChild(taskAdd);
+            ancContainer.appendChild(taskCancel);
 
             titleLabel.innerHTML = "Task Title";
             descLabel.innerHTML = "Description";
@@ -102,7 +104,7 @@ const createProject = () => {
             //add sub task event
             taskAdd.addEventListener("click", () => {
               a++;
-              console.log(a);
+
               if (titleInput.value === "") {
                 alert("Please enter a task Title");
               } else {
@@ -111,7 +113,9 @@ const createProject = () => {
                   descInput.value
                 );
 
-                projectContainer.appendChild(newtask);
+                projectTasks.classList.add("projectTasks");
+                projectContainer.appendChild(projectTasks);
+                projectTasks.appendChild(newtask);
                 newtask.appendChild(subAnc);
                 tasksArr.push(newTaskArr);
 
@@ -121,56 +125,60 @@ const createProject = () => {
                   subAnc.innerHTML = newTitle;
                 }
               }
-              console.log(tasksArr);
-              console.log(subAnc.id);
 
-              projectContainer.removeChild(test);
+              projectContainer.removeChild(ancContainer);
             });
 
             //cancel sub task event
             taskCancel.addEventListener("click", () => {
-              projectContainer.removeChild(test);
+              projectContainer.removeChild(ancContainer);
             });
 
             //subanc event listener
             subAnc.addEventListener("click", (e) => {
               for (let i = 0; i < tasksArr.length; i++) {
                 if (subAnc.id == [i]) {
-                  console.log(tasksArr[i]);
-
+                  //variables
+                  const pfDiv = document.createElement("div");
+                  pfDiv.classList.add("pfDiv");
+                  const pfTitle = document.createElement("h3");
+                  const pfDescLabel = document.createElement("p");
+                  const pfDescBox = document.createElement("textarea");
+                  const pfDate = document.createElement("input");
+                  pfDate.type = "date";
+                  const pfDelete = document.createElement("button");
+                  const pfClose = document.createElement("button");
                   //edit the below
-                  /*
-                  tasks.removeChild(tasksContainer);
-                  tasks.appendChild(taskFocus);
-                  taskFocus.appendChild(tfTitle);
-                  tfTitle.innerHTML = myArray[i].title;
-                  taskFocus.appendChild(tfDescLabel);
-                  taskFocus.appendChild(tfDescBox);
-                  tfDescBox.rows = "5";
-                  tfDescBox.cols = "22";
-                  taskFocus.appendChild(tfDate);
-                  taskFocus.appendChild(tfClose);
-                  taskFocus.appendChild(tfDelete);
 
-                  tfDescLabel.innerHTML = "Description";
-                  tfDescBox.innerHTML = String(myArray[i].description);
+                  projectContainer.removeChild(projectTasks);
+                  projectContainer.appendChild(pfDiv);
+                  pfDiv.appendChild(pfTitle);
+                  pfTitle.innerHTML = tasksArr[i].title;
+                  pfDiv.appendChild(pfDescLabel);
+                  pfDiv.appendChild(pfDescBox);
+                  pfDescBox.rows = "5";
+                  pfDescBox.cols = "22";
+                  pfDiv.appendChild(pfDate);
+                  pfDiv.appendChild(pfClose);
+                  pfDiv.appendChild(pfDelete);
 
-                  tfClose.innerHTML = "Close";
-                  tfDelete.innerHTML = "Delete";
+                  pfDescLabel.innerHTML = "Description";
+                  pfDescBox.innerHTML = String(tasksArr[i].description);
+                  pfClose.innerHTML = "Close";
+                  pfDelete.innerHTML = "Delete";
 
                   //deletes the task
-                  tfDelete.addEventListener("click", () => {
-                    tasks.removeChild(taskFocus);
-                    tasks.removeChild(tasksContainer);
-                    myArray.splice(i, 1, 0);
+                  pfDelete.addEventListener("click", () => {
+                    tasksArr.splice(i, 1, 0);
                   });
 
                   //closes the taskFocus window
-                  tfClose.addEventListener("click", () => {
-                    tasks.removeChild(taskFocus);
-                    tasks.appendChild(tasksContainer);
+                  pfClose.addEventListener("click", () => {
+                    projectContainer.removeChild(pfDiv);
+                    projectContainer.appendChild(projectTasks);
+
+                    //edit the above */
                   });
-                  //edit the above */
                 }
               }
             });

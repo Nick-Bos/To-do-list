@@ -2,8 +2,16 @@ import { taskMaker } from "./taskConstructor";
 import { displayTasks } from "./displayTasks";
 
 const tasksArr = [];
+let taskIndex = 0;
+//
 
-const newTask = () => {
+const newTask1 = (taskName, description) => {
+  taskIndex += 1;
+  const newTask = new taskMaker(taskName, description, taskIndex);
+  return newTask;
+};
+
+const createTask = () => {
   function taskInputAppend() {
     const side = document.querySelector(".side");
     const taskAddContainer = document.createElement("div");
@@ -37,8 +45,7 @@ const newTask = () => {
       if (titleInput.value === "") {
         alert("Please enter a task Title");
       } else {
-        const newArr = new taskMaker(titleInput.value, descInput.value);
-        tasksArr.push(newArr);
+        tasksArr.push(newTask1(titleInput.value, descInput.value));
         //vv display task array code here vv
         displayTasks(tasksArr);
         titleInput.value = "";
@@ -72,4 +79,4 @@ const newTask = () => {
   });
 };
 
-export { newTask };
+export { createTask };
