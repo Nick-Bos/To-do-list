@@ -1,4 +1,4 @@
-import { createTask } from "../dist/createTask";
-import projects from "../dist/projects";
+import { createTask } from "./createTask";
+import projects from "./projects";
 createTask();
 projects();
