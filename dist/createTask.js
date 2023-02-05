@@ -1,4 +1,4 @@
-import { taskMaker } from "./taskConstructor";
+import taskConstructor from "./taskConstructor";
 import { displayTasks } from "./displayTasks";
 
 const tasksArr = [];
@@ -7,7 +7,7 @@ let taskIndex = 0;
 
 const newTask1 = (taskName, description) => {
   taskIndex += 1;
-  const newTask = new taskMaker(taskName, description, taskIndex);
+  const newTask = new taskConstructor(taskName, description, taskIndex);
   return newTask;
 };
 
@@ -43,7 +43,7 @@ const createTask = () => {
     //runs taskmaker constructor
     taskAdd.addEventListener("click", () => {
       if (titleInput.value === "") {
-        alert("Please enter a task Title");
+        alert("Please enter a task title");
       } else {
         tasksArr.push(newTask1(titleInput.value, descInput.value));
         //vv display task array code here vv

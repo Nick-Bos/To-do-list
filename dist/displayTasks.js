@@ -15,10 +15,10 @@ const displayTasks = (a) => {
   const tfClose = document.createElement("button");
 
   //first call of function to display tasks
-  displayArr(myArray, tasksContainer);
+  displayArr(myArray);
 
   //display array function
-  function displayArr(array, node) {
+  function displayArr(array) {
     // selector
     const tasks = document.getElementById("tasks");
 
@@ -89,7 +89,7 @@ const displayTasks = (a) => {
         array.splice(i, 1);
       }
     }
-    displayArr(myArray, tasksContainer);
+    displayArr(myArray);
     console.log(myArray);
   }
 };

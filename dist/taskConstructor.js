@@ -1,4 +1,4 @@
-class taskMaker {
+class taskConstructor {
   constructor(title, description, id, date) {
     this.title = title;
     this.id = id;
@@ -7,4 +7,4 @@ class taskMaker {
   }
 }
 
-export { taskMaker };
+export default taskConstructor;

@@ -1,8 +1,15 @@
-import { projectMaker } from "./projectConstrutor";
 import { taskMaker } from "./taskConstructor";
 import { displayTasks } from "./displayTasks";
 const projArr = [];
 const tasksArr = [];
+let projectIndex = 0;
+let taskIndex = 0;
+
+const newProject1 = (projectName) => {
+  projectIndex += 1;
+  const newProject = new projectMaker(projectName, projectIndex);
+  return newProject;
+};
 
 const createProject = () => {
   // declare variables
@@ -14,7 +21,18 @@ const createProject = () => {
   const projInput = document.createElement("input");
   const projAdd = document.createElement("button");
   const projCancel = document.createElement("button");
-  let a = -1;
+
+  //project focus window
+  const pfDiv = document.createElement("div");
+  pfDiv.classList.add("pfDiv");
+  const pfTitle = document.createElement("h3");
+  const pfDescLabel = document.createElement("p");
+  const pfDescBox = document.createElement("textarea");
+  const pfDate = document.createElement("input");
+  pfDate.type = "date";
+  const pfDelete = document.createElement("button");
+  const pfClose = document.createElement("button");
+
   // Dom element content
   projName.innerHTML = "Project Name";
   projAdd.innerHTML = "Add";
@@ -52,59 +70,41 @@ const createProject = () => {
       projectContainer.classList.add("projectsContainer");
       const projectTasks = document.createElement("div");
       const projectUl = document.createElement("ul");
-      const anc = document.createElement("a");
-      const projNameArr = new projectMaker(projInput.value);
-      projArr.push(projNameArr);
+      const projAnc = document.createElement("a");
+      const projDelete = document.createElement("a");
+      projDelete.classList = "projectDelete";
+      projArr.push(newProject1(projInput.value));
 
-      //display to page
-      function displayArr(arg) {
-        for (let i = 0; i < arg.length; i++) {
-          let newName = arg[i].name;
-          anc.id = [i];
-          anc.innerHTML = newName;
+      //display project name funtion
+      function displayProjArr(array) {
+        for (let i = 0; i < array.length; i++) {
+          let newName = array[i].name;
+          projAnc.innerHTML = newName;
         }
       }
+
+      //Dom
       projects.appendChild(projectContainer);
       projectContainer.appendChild(projectUl);
-      projectUl.appendChild(anc);
-      displayArr(projArr);
+      projectUl.appendChild(projAnc);
+      projectContainer.appendChild(projDelete);
+      projDelete.innerHTML = "Delete";
+      displayProjArr(projArr);
       projInput.value = "";
 
-      anc.addEventListener("click", () => {
+      //opens project details window
+      projAnc.addEventListener("click", () => {
         for (let i = 0; i < projArr.length; i++) {
-          if (anc.id == [i]) {
-            const ancContainer = document.createElement("div");
-            ancContainer.id = "ancContainer";
-            const newtask = document.createElement("li");
-            const subAnc = document.createElement("a");
-            const titleLabel = document.createElement("p");
-            const titleInput = document.createElement("input");
-            const descLabel = document.createElement("p");
-            const descInput = document.createElement("textarea");
-            const taskAdd = document.createElement("button");
-            const taskCancel = document.createElement("button");
-
-            projectContainer.appendChild(ancContainer);
-            ancContainer.appendChild(titleLabel);
-            ancContainer.appendChild(titleInput);
-            ancContainer.appendChild(descLabel);
-            ancContainer.appendChild(descInput);
-            ancContainer.appendChild(taskAdd);
-            ancContainer.appendChild(taskCancel);
-
-            titleLabel.innerHTML = "Task Title";
-            descLabel.innerHTML = "Description";
-            descInput.id = "descInput";
-            descInput.rows = "5";
-            descInput.cols = "22";
-            taskAdd.innerHTML = "Add";
-            taskAdd.id = "taskAdd";
-            taskCancel.innerHTML = "Cancel";
-
+          if (projArr[i].id - 1 == [i]) {
+          }
+        }
+      });
+    }
+  });
+};
+/*
             //add sub task event
             taskAdd.addEventListener("click", () => {
-              a++;
-
               if (titleInput.value === "") {
                 alert("Please enter a task Title");
               } else {
@@ -121,7 +121,6 @@ const createProject = () => {
 
                 for (let i = 0; i < tasksArr.length; i++) {
                   let newTitle = tasksArr[i].title;
-                  subAnc.id = a;
                   subAnc.innerHTML = newTitle;
                 }
               }
@@ -135,51 +134,42 @@ const createProject = () => {
             });
 
             //subanc event listener
-            subAnc.addEventListener("click", (e) => {
+            subAnc.addEventListener("click", () => {
               for (let i = 0; i < tasksArr.length; i++) {
-                if (subAnc.id == [i]) {
-                  //variables
-                  const pfDiv = document.createElement("div");
-                  pfDiv.classList.add("pfDiv");
-                  const pfTitle = document.createElement("h3");
-                  const pfDescLabel = document.createElement("p");
-                  const pfDescBox = document.createElement("textarea");
-                  const pfDate = document.createElement("input");
-                  pfDate.type = "date";
-                  const pfDelete = document.createElement("button");
-                  const pfClose = document.createElement("button");
-                  //edit the below
+                //edit the below
+                console.log(tasksArr);
+                projectContainer.removeChild(projectTasks);
+                projectContainer.appendChild(pfDiv);
+                pfDiv.appendChild(pfTitle);
+                pfTitle.innerHTML = tasksArr[i].title;
+                pfDiv.appendChild(pfDescLabel);
+                pfDiv.appendChild(pfDescBox);
+                pfDescBox.rows = "5";
+                pfDescBox.cols = "22";
+                pfDiv.appendChild(pfDate);
+                pfDiv.appendChild(pfClose);
+                pfDiv.appendChild(pfDelete);
+                pfDelete.id = [i + 1];
 
-                  projectContainer.removeChild(projectTasks);
-                  projectContainer.appendChild(pfDiv);
-                  pfDiv.appendChild(pfTitle);
-                  pfTitle.innerHTML = tasksArr[i].title;
-                  pfDiv.appendChild(pfDescLabel);
-                  pfDiv.appendChild(pfDescBox);
-                  pfDescBox.rows = "5";
-                  pfDescBox.cols = "22";
-                  pfDiv.appendChild(pfDate);
-                  pfDiv.appendChild(pfClose);
-                  pfDiv.appendChild(pfDelete);
+                pfDescLabel.innerHTML = "Description";
+                pfDescBox.innerHTML = String(tasksArr[i].description);
+                pfClose.innerHTML = "Save";
+                pfDelete.innerHTML = "Delete";
 
-                  pfDescLabel.innerHTML = "Description";
-                  pfDescBox.innerHTML = String(tasksArr[i].description);
-                  pfClose.innerHTML = "Close";
-                  pfDelete.innerHTML = "Delete";
+                //deletes the task
+                pfDelete.addEventListener("click", (e) => {
+                  removeItem(tasksArr, e.target.id);
+                  tasksArr.splice(i, 1);
+                });
 
-                  //deletes the task
-                  pfDelete.addEventListener("click", () => {
-                    tasksArr.splice(i, 1, 0);
-                  });
-
-                  //closes the taskFocus window
-                  pfClose.addEventListener("click", () => {
-                    projectContainer.removeChild(pfDiv);
-                    projectContainer.appendChild(projectTasks);
-
-                    //edit the above */
-                  });
-                }
+                //updates array and closes the taskFocus window
+                pfClose.addEventListener("click", () => {
+                  projectContainer.removeChild(pfDiv);
+                  projectContainer.appendChild(projectTasks);
+                  tasksArr[i].description = pfDescBox.value;
+                  tasksArr[i].date = pfDate.value;
+                  //edit the above 
+                });
               }
             });
           }
@@ -187,6 +177,16 @@ const createProject = () => {
       });
     }
   });
+
+  function removeItem(array, item) {
+    for (let i = 0; i < array.length; i++) {
+      if (item - 1 == i) {
+        array.splice(i, 1);
+      }
+    }
+
+    console.log(tasksArr);
+  }
 
   //project focus cancel btn event listener
   projCancel.addEventListener("click", () => {
@@ -199,5 +199,5 @@ const createProject = () => {
     projInput.value = "";
   });
 };
-
+*/
 export { createProject };

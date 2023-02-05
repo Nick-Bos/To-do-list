@@ -62,7 +62,7 @@ button {
 }
 .projectsContainer {
     display: grid;
-    border: solid red 1px;
+    
     margin-top: 5px;
     
 }
@@ -73,6 +73,12 @@ button {
 
 .projectsContainer>div {
     grid-column: 1;
+}
+
+.projectDelete {
+    margin-left: auto;
+    margin-right: 50px;
+    margin-top: 0px;
 }
 
 .tfDiv {
