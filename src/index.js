@@ -1,4 +1,2 @@
-import { createTask } from "./createTask";
-import projects from "./projects";
-createTask();
-projects();
+import app from "./app";
+app();
